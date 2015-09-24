@@ -17,6 +17,7 @@ struct ConstantsData {
     }
     enum Identifiers {
         static let CollectionCell = "CollectionCell"
+        static let accountTableViewCell = "accountTableViewCell"
     }
 }
 

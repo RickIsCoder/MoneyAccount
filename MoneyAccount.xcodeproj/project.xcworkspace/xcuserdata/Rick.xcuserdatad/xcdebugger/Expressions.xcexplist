@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "AddNewAccountViewController.addAccount(AnyObject) -&gt; ():AddNewAccountViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "newAccount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

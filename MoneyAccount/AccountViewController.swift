@@ -9,24 +9,44 @@
 import UIKit
 import CoreData
 
-class AccountViewController: UIViewController
+class AccountViewController: UIViewController, UITableViewDataSource
 {
     @IBOutlet weak var homepageBgUIView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.dataSource = self
+        }
+    }
     
     var currentDay: String!
-    var moneyAccount: [MoneyAccount]! = []
+    var moneyAccounts: [MoneyAccount]! = []
     var coreDataStack: CoreDataStack!
+    
+    @IBOutlet weak var currentDayPaymentCount: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(false)
+        
         currentDay = getCurrentDay(NSDate())
         
         setBgImageForView()
+        //getDataForCurrentDay()
         
-        getDataForCurrentDay()
-
+        let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.MoneyAccountEntity)
+        accountFetch.predicate = NSPredicate(format: "accountDay == %@", currentDay)
+        
+        do {
+            moneyAccounts = try coreDataStack.context.executeFetchRequest(accountFetch) as! [MoneyAccount]
+            print(moneyAccounts[moneyAccounts.count - 1].paymentType)
+        } catch {
+            
+        }
+        
     }
     
     private func getCurrentDay(date: NSDate) -> String {
@@ -39,21 +59,28 @@ class AccountViewController: UIViewController
     // 异步查找数据
     private func getDataForCurrentDay() {
         let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.MoneyAccountEntity)
-        accountFetch.predicate = NSPredicate(format: "accountDate == %@", currentDay)
+        accountFetch.predicate = NSPredicate(format: "accountDay == %@", currentDay)
         
-        var asyncFetchRequest: NSAsynchronousFetchRequest! = NSAsynchronousFetchRequest(fetchRequest: accountFetch) {
+        let asyncFetchRequest: NSAsynchronousFetchRequest! = NSAsynchronousFetchRequest(fetchRequest: accountFetch) {
             [unowned self]
             (result: NSAsynchronousFetchResult!) -> Void in
-            self.moneyAccount = result.finalResult as! [MoneyAccount]
+            self.moneyAccounts = result.finalResult as! [MoneyAccount]
             self.tableView.reloadData()
+            
+            if self.moneyAccounts.count > 0 {
+                print(self.moneyAccounts[self.moneyAccounts.count - 1].paymentType)
+            }
+            
+            var sumPayment = 0
+            for item in self.moneyAccounts {
+                sumPayment = Int(item.payment!) + sumPayment
+            }
+            self.currentDayPaymentCount.text = "\(sumPayment)"
         }
-        var error: NSError?
-        let results = coreDataStack.context.executeRequest(asyncFetchRequest, error: &error)
-        
-        if let persistentStorResults = results {
-            // return immediately, cancel here if you want
-        } else {
-            println("Could not fetch \(error), \(error!.userInfo)")
+        do {
+            try coreDataStack.context.executeRequest(asyncFetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)", terminator: "")
         }
     }
     
@@ -65,8 +92,28 @@ class AccountViewController: UIViewController
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == ConstantsData.SegueNames.addNewAccountVCSegue {
-            
+            if let addNewAccountVCon = segue.destinationViewController as? AddNewAccountViewController {
+                addNewAccountVCon.coreDataStack = coreDataStack
+            }
         }
     }
+    
+    // table view
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(ConstantsData.Identifiers.accountTableViewCell)! as! AccountTablevViewCell
+        cell.paymentAccount.text = "\(moneyAccounts[indexPath.row].payment!)"
+        if moneyAccounts[indexPath.row].paymentType != nil {
+            cell.paymentTypeName.text = "\(moneyAccounts[indexPath.row].paymentType!.typeName!)"
+            cell.paymentTypeIcon.image = UIImage(named: moneyAccounts[indexPath.row].paymentType!.typeIconName!)
+        }
+        
+        cell.backgroundColor = UIColor.clearColor()
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return moneyAccounts.count
+    }
+    
     
 }

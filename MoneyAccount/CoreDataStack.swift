@@ -10,57 +10,65 @@ import Foundation
 import CoreData
 
 class CoreDataStack {
-    let context: NSManagedObjectContext
-    let psc: NSPersistentStoreCoordinator
-    let model: NSManagedObjectModel
-    var store: NSPersistentStore? 
+    lazy var applicationDocumentsDirectory: NSURL = {
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "Rick.testCoreData" in the application's documents Application Support directory.
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count-1]
+    }()
     
-    init() {
-        // 从硬盘加载managed object model，这里通过读取momd目录下的编译后的.xcdatamodeld文件实现
-        let bundle = NSBundle.mainBundle()
-        let modelURL = bundle.URLForResource("MoneyAccount", withExtension: "momd")
-        model = NSManagedObjectModel(contentsOfURL: modelURL!)!
-        
-        // 一旦初始化了NSManagedObjectModel，下一步是创建PSC, PSC用于桥接model和persistentStore
-        psc = NSPersistentStoreCoordinator(managedObjectModel: model)
-        
-        // Context的初始化没有任何参数，我们将psc连接到context上
-        // 使用异步fetch，需要将type设置为MainQueueConcurrencyType
-        context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
-        context.persistentStoreCoordinator = psc
-        
-        // 我们不需要手工创建ps, psc会帮我们创建它。我们只需要为psc提供所需的PS类型，一些配置，存放路径即可
-        let documentsURL = applicationDocumentsDirectory()
-        let storeURL = documentsURL.URLByAppendingPathComponent("MoneyAccount")
-        
-        let options = [NSMigratePersistentStoresAutomaticallyOption: true]
-        
-        var error: NSError? = nil
-        store = psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error)
-        
-        if store == nil {
-            println("Error adding persistent store: \(error)")
+    lazy var model: NSManagedObjectModel = {
+        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
+        let modelURL = NSBundle.mainBundle().URLForResource("MoneyAccount", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOfURL: modelURL)!
+    }()
+    
+    lazy var psc: NSPersistentStoreCoordinator = {
+        // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
+        // Create the coordinator and store
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.model)
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("MoneyAccount")
+        var failureReason = "There was an error creating or loading the application's saved data."
+        do {
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch {
+            // Report any error we got.
+            var dict = [String: AnyObject]()
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+            
+            dict[NSUnderlyingErrorKey] = error as NSError
+            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            // Replace this with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             abort()
         }
-    }
+        
+        return coordinator
+    }()
     
-    func saveContext() {
-        var error: NSError? = nil
-        if context.hasChanges && !context.save(&error) {
-            println("Could not save: \(error), \(error?.userInfo)")
+    lazy var context: NSManagedObjectContext = {
+        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
+        let coordinator = self.psc
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = coordinator
+        return managedObjectContext
+    }()
+    
+    // MARK: - Core Data Saving support
+    
+    func saveContext () {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                abort()
+            }
         }
     }
-    
-    // 获取应用程序documents diretory的url
-    // swift中必须初始化所有变量后才可以调用函数
-    func applicationDocumentsDirectory() -> NSURL {
-        let fileManager = NSFileManager.defaultManager()
-        
-        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask) as! Array<NSURL>
-        
-        return urls[0]
-    }
-
-    
 
 }

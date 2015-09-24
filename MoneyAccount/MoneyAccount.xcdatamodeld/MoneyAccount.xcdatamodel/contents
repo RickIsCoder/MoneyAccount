@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Automatic">
     <entity name="MoneyAccount" representedClassName="MoneyAccount.MoneyAccount" syncable="YES">
         <attribute name="accountDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="accountDay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accountDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="payment" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -11,10 +12,10 @@
         <attribute name="typeDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="typeIconName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="typeName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="moneyAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MoneyAccount" inverseName="paymentType" inverseEntity="MoneyAccount" syncable="YES"/>
+        <relationship name="moneyAccount" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MoneyAccount" inverseName="paymentType" inverseEntity="MoneyAccount" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MoneyAccount" positionX="-423" positionY="-171" width="128" height="120"/>
+        <element name="MoneyAccount" positionX="-423" positionY="-171" width="128" height="135"/>
         <element name="PaymentType" positionX="-164" positionY="-27" width="128" height="105"/>
     </elements>
 </model>

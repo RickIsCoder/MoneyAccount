@@ -32,9 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 将coreDataStack传给viewController
         if let tabBarController: UITabBarController = self.window!.rootViewController! as? UITabBarController {
-            if let accountViewController: AccountViewController = ((tabBarController.viewControllers as! [UIViewController])[0] as? UINavigationController)?.visibleViewController as? AccountViewController  {
-                // 如果是AccontViewController
-                accountViewController.coreDataStack = coreDataStack
+            if let navVCon = tabBarController.viewControllers![0] as? UINavigationController {
+                if let accountViewController = navVCon.visibleViewController as? AccountViewController {
+                    accountViewController.coreDataStack = coreDataStack
+                }
             }
         }
         
@@ -137,9 +138,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Remove all data
             removeAllExitData()
             
-            var error: NSError?
             let accountTypeEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.PaymentTypeEntity, inManagedObjectContext: coreDataStack.context)
-            if let items = parseCSV(contentsOfURL, NSUTF8StringEncoding, &error) {
+            do {
+                let items = try parseCSV(contentsOfURL, encoding: NSUTF8StringEncoding)
                 // Preload the menu items
                 for item in items {
                     let accountType = PaymentType(entity:accountTypeEntity!, insertIntoManagedObjectContext: coreDataStack.context)
@@ -149,6 +150,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     coreDataStack.saveContext()
                 }
+            } catch let error as NSError {
+                print("\(error.userInfo)")
             }
         }
     }
@@ -156,15 +159,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func removeAllExitData() {
         // Remove the existing items
         let fetchRequest = NSFetchRequest(entityName: ConstantsData.EntityNames.PaymentTypeEntity)
-        var error: NSError?
-        let items = coreDataStack.context.executeFetchRequest(fetchRequest, error: &error) as! [PaymentType]
-        
-        if error != nil {
-            println("Failed to retrieve record: \(error?.localizedDescription)")
-        } else {
+        do {
+            let items = (try coreDataStack.context.executeFetchRequest(fetchRequest)) as! [PaymentType]
             for item in items {
                 coreDataStack.context.deleteObject(item)
             }
+        } catch let error as NSError {
+            print("Failed to retrieve record: \(error.localizedDescription)")
         }
     }
     

@@ -9,15 +9,35 @@
 import UIKit
 import CoreData
 
-class AddNewAccountViewController: UIViewController, UICollectionViewDataSource
+class AddNewAccountViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate
 {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.dataSource = self
+            collectionView.delegate = self
+        }
+    }
+    @IBOutlet weak var payment: UITextField! {
+        didSet {
+            payment.delegate = self
+        }
+    }
+   
+    var paymentTypes: [PaymentType]! = []
+    var coreDataStack: CoreDataStack!
+    var newAccount: MoneyAccount!
+    
+    var paymentTypeSelected: PaymentType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // get default type data
+        getAccountType()
+        
+        let monenyEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.MoneyAccountEntity, inManagedObjectContext: coreDataStack.context)
+        newAccount = MoneyAccount(entity: monenyEntity!, insertIntoManagedObjectContext: coreDataStack.context)
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,26 +46,97 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func getAccountType() {
+        let paymentTypeFetchRequest = NSFetchRequest(entityName: ConstantsData.EntityNames.PaymentTypeEntity)
+        
+        let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: paymentTypeFetchRequest) {
+            [unowned self]
+            (result: NSAsynchronousFetchResult) -> Void in
+            self.paymentTypes = result.finalResult as! [PaymentType]
+            self.collectionView.reloadData()
+            
+            // set default type
+            self.paymentTypeSelected = self.paymentTypes[0]
+        }
+        do {
+            try coreDataStack.context.executeRequest(asyncFetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch \(error.userInfo)")
+        }
     }
-    */
     
     
     // MARK: - CollectionView
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return paymentTypes.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = UICollectionViewCell()
+        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier(ConstantsData.Identifiers.CollectionCell, forIndexPath: indexPath) as! PaymentTypesCollectionViewCell
+        cell.paymentTypeImage.image = UIImage(named: paymentTypes[indexPath.item].typeIconName!)
+        cell.paymentTypeName.text = paymentTypes[indexPath.item].typeName
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PaymentTypesCollectionViewCell
+        cell.backgroundColor = UIColor.greenColor()
+        if let collectionCellText = cell.paymentTypeName.text {
+            paymentTypeSelected.typeName = collectionCellText
+            
+            for item in paymentTypes {
+                if item.typeName == collectionCellText {
+                    paymentTypeSelected = item
+                }
+            }
+            
+        }
+        print(paymentTypeSelected)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PaymentTypesCollectionViewCell
+        cell.backgroundColor = UIColor.grayColor()
+    }
+    
+    
+   
+    // add new account
+    @IBAction func addAccount(sender: AnyObject) {
+        // set id
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddhhmmss"
+        let dateString = dateFormatter.stringFromDate(date)
+        let dateNub32 = Int(dateString)
+        let dateNub = NSNumber(long: dateNub32!)
+        newAccount.id = dateNub
+        
+        newAccount.payment = Int(payment.text!)
+        newAccount.paymentType = paymentTypeSelected
+        
+        let dateFormatter1 = NSDateFormatter()
+        dateFormatter1.dateFormat = "yyyy-MM-dd"
+        
+        newAccount.accountDay = dateFormatter1.stringFromDate(date)
+        newAccount.accountDate = date
+        
+        print(newAccount)
+        
+        do {
+            try coreDataStack.context.save()
+        } catch let error as NSError {
+            print("Cloud not save \(error)")
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
 }

@@ -8,12 +8,14 @@
 
 import Foundation
 
-func parseCSV (contentsOfURL: NSURL, encoding: NSStringEncoding, error: NSErrorPointer) -> [(typeName:String, typeIconName:String, typeDescription: String)]? {
+func parseCSV (contentsOfURL: NSURL, encoding: NSStringEncoding) throws -> [(typeName:String, typeIconName:String, typeDescription: String)] {
+    var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
     // Load the CSV file and parse it
     let delimiter = ","
     var items:[(typeName:String, typeIconName:String, typeDescription: String)]?
     
-    if let content = String(contentsOfURL: contentsOfURL, encoding: encoding, error: error) {
+    do {
+        let content = try String(contentsOfURL: contentsOfURL, encoding: encoding)
         items = []
         let lines:[String] = content.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) as [String]
         
@@ -40,7 +42,7 @@ func parseCSV (contentsOfURL: NSURL, encoding: NSStringEncoding, error: NSErrorP
                         values.append(value as! String)
                         
                         // Retrieve the unscanned remainder of the string
-                        if textScanner.scanLocation < count(textScanner.string) {
+                        if textScanner.scanLocation < textScanner.string.characters.count {
                             textToScan = (textScanner.string as NSString).substringFromIndex(textScanner.scanLocation + 1)
                         } else {
                             textToScan = ""
@@ -59,9 +61,14 @@ func parseCSV (contentsOfURL: NSURL, encoding: NSStringEncoding, error: NSErrorP
                 items?.append(item)
             }
         }
+    } catch let error1 as NSError {
+        error = error1
     }
     
-    return items
+    if let value = items {
+        return value
+    }
+    throw error
 }
 
 
