@@ -9,18 +9,23 @@
 import UIKit
 import CoreData
 
-class AccountViewController: UIViewController, UITableViewDataSource
+class AccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     @IBOutlet weak var homepageBgUIView: UIView!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
+            tableView.delegate = self
         }
     }
     
     var currentDay: String!
     var moneyAccounts: [MoneyAccount]! = []
     var coreDataStack: CoreDataStack!
+    
+    let SelectedTableViewCellHeight: CGFloat = 90
+    let UnSelectedTableViewCellHeight: CGFloat = 45
+    var selectedCellIndexPath: NSIndexPath?
     
     @IBOutlet weak var currentDayPaymentCount: UILabel!
     
@@ -35,18 +40,7 @@ class AccountViewController: UIViewController, UITableViewDataSource
         currentDay = getCurrentDay(NSDate())
         
         setBgImageForView()
-        //getDataForCurrentDay()
-        
-        let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.MoneyAccountEntity)
-        accountFetch.predicate = NSPredicate(format: "accountDay == %@", currentDay)
-        
-        do {
-            moneyAccounts = try coreDataStack.context.executeFetchRequest(accountFetch) as! [MoneyAccount]
-            print(moneyAccounts[moneyAccounts.count - 1].paymentType)
-        } catch {
-            
-        }
-        
+        getDataForCurrentDay()
     }
     
     private func getCurrentDay(date: NSDate) -> String {
@@ -66,10 +60,6 @@ class AccountViewController: UIViewController, UITableViewDataSource
             (result: NSAsynchronousFetchResult!) -> Void in
             self.moneyAccounts = result.finalResult as! [MoneyAccount]
             self.tableView.reloadData()
-            
-            if self.moneyAccounts.count > 0 {
-                print(self.moneyAccounts[self.moneyAccounts.count - 1].paymentType)
-            }
             
             var sumPayment = 0
             for item in self.moneyAccounts {
@@ -113,6 +103,22 @@ class AccountViewController: UIViewController, UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moneyAccounts.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if selectedCellIndexPath != nil {
+            if selectedCellIndexPath == indexPath {
+                return SelectedTableViewCellHeight
+            }
+        }
+        return UnSelectedTableViewCellHeight
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        selectedCellIndexPath = indexPath
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     

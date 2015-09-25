@@ -20,15 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // 第一次使用应用时，读入默认数据
-        preloadCSVData()
+        // preloadCSVData()
         
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        let isPreloaded = defaults.boolForKey("isPreloaded")
-//        if !isPreloaded {
-//            preloadData()
-//            defaults.setBool(true, forKey: "isPreloaded")
-//        }
-//        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let isPreloaded = defaults.boolForKey("isPreloaded")
+        if !isPreloaded {
+            preloadCSVData()
+            defaults.setBool(true, forKey: "isPreloaded")
+        }
+        
         
         // 将coreDataStack传给viewController
         if let tabBarController: UITabBarController = self.window!.rootViewController! as? UITabBarController {

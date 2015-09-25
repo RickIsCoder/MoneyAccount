@@ -54,7 +54,6 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
             (result: NSAsynchronousFetchResult) -> Void in
             self.paymentTypes = result.finalResult as! [PaymentType]
             self.collectionView.reloadData()
-            
             // set default type
             self.paymentTypeSelected = self.paymentTypes[0]
         }
