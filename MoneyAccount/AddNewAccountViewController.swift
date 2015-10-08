@@ -91,7 +91,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
             }
             
         }
-        print(paymentTypeSelected)
+//        print(paymentTypeSelected)
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
@@ -112,7 +112,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         let dateNub = NSNumber(long: dateNub32!)
         newAccount.id = dateNub
         
-        newAccount.payment = Int(payment.text!)
+        newAccount.payment = Float(payment.text!)
         newAccount.paymentType = paymentTypeSelected
         
         let dateFormatter1 = NSDateFormatter()

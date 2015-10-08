@@ -2,7 +2,7 @@
 //  MoneyAccount+CoreDataProperties.swift
 //  MoneyAccount
 //
-//  Created by Rick on 15/9/24.
+//  Created by Rick on 15/10/8.
 //  Copyright © 2015年 Rick. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu

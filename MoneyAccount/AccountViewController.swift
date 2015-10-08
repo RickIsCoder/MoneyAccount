@@ -61,9 +61,9 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
             self.moneyAccounts = result.finalResult as! [MoneyAccount]
             self.tableView.reloadData()
             
-            var sumPayment = 0
+            var sumPayment:Float = 0
             for item in self.moneyAccounts {
-                sumPayment = Int(item.payment!) + sumPayment
+                sumPayment = Float(item.payment!) + sumPayment
             }
             self.currentDayPaymentCount.text = "\(sumPayment)"
         }

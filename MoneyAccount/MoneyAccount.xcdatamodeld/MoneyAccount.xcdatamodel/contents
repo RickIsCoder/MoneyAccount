@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A284" minimumToolsVersion="Automatic">
     <entity name="MoneyAccount" representedClassName="MoneyAccount.MoneyAccount" syncable="YES">
         <attribute name="accountDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="accountDay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accountDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="payment" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="payment" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <relationship name="paymentType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentType" inverseName="moneyAccount" inverseEntity="PaymentType" syncable="YES"/>
     </entity>
     <entity name="PaymentType" representedClassName="MoneyAccount.PaymentType" syncable="YES">
