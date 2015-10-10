@@ -38,6 +38,9 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         
         let monenyEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.MoneyAccountEntity, inManagedObjectContext: coreDataStack.context)
         newAccount = MoneyAccount(entity: monenyEntity!, insertIntoManagedObjectContext: coreDataStack.context)
+        
+        payment.becomeFirstResponder()
+        self.addDoneButtonForTextField()
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,7 +103,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
     }
     
     
-   
+    // MARK: - Button
     // add new account
     @IBAction func addAccount(sender: AnyObject) {
         // set id
@@ -108,8 +111,8 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyyMMddhhmmss"
         let dateString = dateFormatter.stringFromDate(date)
-        let dateNub32 = Int(dateString)
-        let dateNub = NSNumber(long: dateNub32!)
+        let dateNub32 = Int64(dateString)
+        let dateNub = NSNumber(longLong: dateNub32!)
         newAccount.id = dateNub
         
         newAccount.payment = Float(payment.text!)
@@ -132,10 +135,32 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // cancel and return
+    @IBAction func cancelAndReturn(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
+    
+    // MARK: - TextField
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    private func addDoneButtonForTextField() {
+        let doneBar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let doneBarButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: Selector("doneBarAction"))
+        
+        let items: [UIBarButtonItem] = [flexSpace,doneBarButton]
+        doneBar.setItems(items, animated: false)
+        
+        self.payment.inputAccessoryView = doneBar
+    }
+    
+    func doneBarAction() {
+        payment.resignFirstResponder()
     }
 
 }

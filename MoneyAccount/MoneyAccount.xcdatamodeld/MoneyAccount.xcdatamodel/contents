@@ -4,7 +4,7 @@
         <attribute name="accountDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="accountDay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accountDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="payment" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <relationship name="paymentType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentType" inverseName="moneyAccount" inverseEntity="PaymentType" syncable="YES"/>
     </entity>
