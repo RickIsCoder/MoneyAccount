@@ -18,6 +18,7 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
             tableView.delegate = self
         }
     }
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var currentDay: String!
     var moneyAccounts: [MoneyAccount]! = []
@@ -32,6 +33,7 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        resizeScrollView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -88,7 +90,7 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    // table view
+    // MARK: - table view
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ConstantsData.Identifiers.accountTableViewCell)! as! AccountTablevViewCell
         cell.paymentAccount.text = "\(moneyAccounts[indexPath.row].payment!)"
@@ -121,5 +123,10 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.endUpdates()
     }
     
-    
+    // MARK: - ScrollView
+    private func resizeScrollView() {
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.size.width * 3, height: self.scrollView.frame.size.height)
+        self.scrollView.contentOffset.x = CGFloat(-self.scrollView.frame.size.width)
+    }
+   
 }

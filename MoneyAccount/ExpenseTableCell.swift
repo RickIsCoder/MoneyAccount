@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountTablevViewCell: UITableViewCell {
+class ExpenseTableCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
