@@ -74,22 +74,22 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="Oju-3j-Wui"/>
-                        <exclude reference="vus-Lg-rRN"/>
-                        <exclude reference="QEu-qJ-asG"/>
                         <exclude reference="4Nu-Fk-0t0"/>
-                        <exclude reference="gjQ-zm-a7E"/>
+                        <exclude reference="Oju-3j-Wui"/>
+                        <exclude reference="QEu-qJ-asG"/>
+                        <exclude reference="vus-Lg-rRN"/>
                         <exclude reference="1X2-qN-sVY"/>
-                        <exclude reference="rP5-4z-N0k"/>
+                        <exclude reference="gjQ-zm-a7E"/>
                         <exclude reference="qif-pC-fhI"/>
+                        <exclude reference="rP5-4z-N0k"/>
                         <exclude reference="xHy-G5-aYM"/>
-                        <exclude reference="TVl-Xf-bLz"/>
-                        <exclude reference="y6X-qV-3NH"/>
-                        <exclude reference="gXM-t8-zY0"/>
                         <exclude reference="9uY-UL-LGs"/>
-                        <exclude reference="L6o-tD-Chz"/>
-                        <exclude reference="K4Q-jV-Se3"/>
                         <exclude reference="Cny-kK-d9e"/>
+                        <exclude reference="K4Q-jV-Se3"/>
+                        <exclude reference="L6o-tD-Chz"/>
+                        <exclude reference="TVl-Xf-bLz"/>
+                        <exclude reference="gXM-t8-zY0"/>
+                        <exclude reference="y6X-qV-3NH"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

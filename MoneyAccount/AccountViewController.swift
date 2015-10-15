@@ -9,15 +9,15 @@
 import UIKit
 import CoreData
 
-class AccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+class AccountViewController: UIViewController
 {
     @IBOutlet weak var homepageBgUIView: UIView!
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.dataSource = self
-            tableView.delegate = self
-        }
-    }
+//    @IBOutlet weak var tableView: UITableView! {
+//        didSet {
+//            tableView.dataSource = self
+//            tableView.delegate = self
+//        }
+//    }
     @IBOutlet weak var scrollView: UIScrollView!
     
     var currentDay: String!
@@ -33,7 +33,7 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resizeScrollView()
+        addExpenseViews()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,8 +41,16 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
         
         currentDay = getCurrentDay(NSDate())
         
-        setBgImageForView()
-        getDataForCurrentDay()
+        
+        
+//        setBgImageForView()
+//        getDataForCurrentDay()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(false)
+        
+        resizeScrollView()
     }
     
     private func getCurrentDay(date: NSDate) -> String {
@@ -61,7 +69,7 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
             [unowned self]
             (result: NSAsynchronousFetchResult!) -> Void in
             self.moneyAccounts = result.finalResult as! [MoneyAccount]
-            self.tableView.reloadData()
+//            self.tableView.reloadData()
             
             var sumPayment:Float = 0
             for item in self.moneyAccounts {
@@ -78,8 +86,8 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
     
     private func setBgImageForView() {
         let bgColor: UIColor = UIColor(patternImage: UIImage(named: "BGImage")!)
-        homepageBgUIView.backgroundColor = bgColor
-        tableView.backgroundColor = bgColor
+//        homepageBgUIView.backgroundColor = bgColor
+//        tableView.backgroundColor = bgColor
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -92,7 +100,7 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - table view
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ConstantsData.Identifiers.accountTableViewCell)! as! AccountTablevViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ConstantsData.Identifiers.accountTableViewCell)! as! ExpenseTableCell
         cell.paymentAccount.text = "\(moneyAccounts[indexPath.row].payment!)"
         if moneyAccounts[indexPath.row].paymentType != nil {
             cell.paymentTypeName.text = "\(moneyAccounts[indexPath.row].paymentType!.typeName!)"
@@ -124,9 +132,75 @@ class AccountViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: - ScrollView
-    private func resizeScrollView() {
+    func initScrollView() {
+//        self.scrollView.frame.size.width = CGFloat(320)
+        
+        
+//        addExpenseViews()
+    }
+    
+    func resizeScrollView() {
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.size.width * 3, height: self.scrollView.frame.size.height)
-        self.scrollView.contentOffset.x = CGFloat(-self.scrollView.frame.size.width)
+        self.scrollView.contentOffset = CGPoint(x: self.scrollView.frame.size.width, y: 0)
+        self.scrollView.layoutIfNeeded()
+        
+        
+        
+        print(self.view.frame.size,"+",self.scrollView.frame.size,"+",self.scrollView.contentSize)
+        
+        
+    }
+    
+    func addExpenseViews() {
+        let preExpenseView = ExpenseView()
+        let expenseView = ExpenseView()
+        let afterExpenseView = ExpenseView()
+        
+        expenseView.translatesAutoresizingMaskIntoConstraints = false
+        preExpenseView.translatesAutoresizingMaskIntoConstraints = false
+        afterExpenseView.translatesAutoresizingMaskIntoConstraints = false
+        
+
+        self.scrollView.addSubview(expenseView)
+        self.scrollView.addSubview(preExpenseView)
+        self.scrollView.addSubview(afterExpenseView)
+        
+        setExpenseViewConstraints(expenseView)
+        setExpenseViewConstraints(preExpenseView)
+        setExpenseViewConstraints(afterExpenseView)
+        
+        expenseView.tableView.backgroundColor = UIColor.grayColor()
+        preExpenseView.tableView.backgroundColor = UIColor.greenColor()
+        afterExpenseView.tableView.backgroundColor = UIColor.blackColor()
+        
+        let expenseViewPositionConstraint = NSLayoutConstraint(item: expenseView, attribute: .LeadingMargin, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: self.scrollView.bounds.width)
+        self.scrollView.addConstraint(expenseViewPositionConstraint)
+        
+        let preExpenseViewPositionConstraint = NSLayoutConstraint(item: preExpenseView, attribute: .Leading, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: 0)
+        self.scrollView.addConstraint(preExpenseViewPositionConstraint)
+        
+        let afterExpenseViewPositionConstraint = NSLayoutConstraint(item: afterExpenseView, attribute: .Leading, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: 0)
+        self.scrollView.addConstraint(afterExpenseViewPositionConstraint)
+        
+        
+        
+        
+        
+        
+        
+        
+        self.scrollView.layoutIfNeeded()
+    }
+    
+    func setExpenseViewConstraints(expenseView: ExpenseView) {
+        let topConstraint = NSLayoutConstraint(item: expenseView, attribute: .Top, relatedBy: .Equal, toItem: self.scrollView, attribute: .Top, multiplier: 1, constant: 0)
+        self.scrollView.addConstraint(topConstraint)
+        
+        let heightConstraint = NSLayoutConstraint(item: expenseView, attribute: .Height, relatedBy: .Equal, toItem: self.scrollView, attribute: .Height, multiplier: 1, constant: 0)
+        self.scrollView.addConstraint(heightConstraint)
+        
+        let widthConstraint = NSLayoutConstraint(item: expenseView, attribute: .Width, relatedBy: .Equal, toItem: self.scrollView, attribute: .Width, multiplier: 1, constant: 0)
+        self.scrollView.addConstraint(widthConstraint)
     }
    
 }
