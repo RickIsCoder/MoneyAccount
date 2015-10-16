@@ -33,6 +33,7 @@ class AccountViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        resizeScrollView()
         addExpenseViews()
     }
     
@@ -50,7 +51,7 @@ class AccountViewController: UIViewController
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(false)
         
-        resizeScrollView()
+//        resizeScrollView()
     }
     
     private func getCurrentDay(date: NSDate) -> String {
@@ -140,9 +141,10 @@ class AccountViewController: UIViewController
     }
     
     func resizeScrollView() {
-        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.size.width * 3, height: self.scrollView.frame.size.height)
-        self.scrollView.contentOffset = CGPoint(x: self.scrollView.frame.size.width, y: 0)
         self.scrollView.layoutIfNeeded()
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 3, height: self.scrollView.frame.height)
+        //self.scrollView.contentOffset = CGPoint(x: self.scrollView.frame.size.width, y: 0)
+        //self.scrollView.layoutIfNeeded()
         
         
         
@@ -152,55 +154,79 @@ class AccountViewController: UIViewController
     }
     
     func addExpenseViews() {
-        let preExpenseView = ExpenseView()
-        let expenseView = ExpenseView()
-        let afterExpenseView = ExpenseView()
         
-        expenseView.translatesAutoresizingMaskIntoConstraints = false
-        preExpenseView.translatesAutoresizingMaskIntoConstraints = false
-        afterExpenseView.translatesAutoresizingMaskIntoConstraints = false
+        var frame = self.scrollView.frame
+        frame.origin.y = 0
+        frame.origin.x = 0
+        let preExpenseViewController = ExpenseViewController(nibName: "ExpenseView", bundle: NSBundle.mainBundle())
+        preExpenseViewController.view.frame = frame
+        
+        self.addChildViewController(preExpenseViewController)
+        self.scrollView.addSubview(preExpenseViewController.view)
+        preExpenseViewController.didMoveToParentViewController(self)
+        
+        frame.origin.x = self.scrollView.frame.width
+        let expenseViewController = ExpenseViewController(nibName: "ExpenseView", bundle: NSBundle.mainBundle())
+        expenseViewController.view.frame = frame
+        
+        self.addChildViewController(expenseViewController)
+        self.scrollView.addSubview(expenseViewController.view)
+        expenseViewController.didMoveToParentViewController(self)
+        
+        
+        frame.origin.x = self.scrollView.frame.width * 2
+        let nextExpenseViewController = ExpenseViewController(nibName: "ExpenseView", bundle: NSBundle.mainBundle())
+        nextExpenseViewController.view.frame = frame
+        
+        self.addChildViewController(nextExpenseViewController)
+        self.scrollView.addSubview(nextExpenseViewController.view)
+        nextExpenseViewController.didMoveToParentViewController(self)
+        
+//        expenseViewController.layoutIfNeeded()
+//        preExpenseView.layoutIfNeeded()
+//        nextExpenseViewController.layoutIfNeeded()
+        
+//        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        expenseView.translatesAutoresizingMaskIntoConstraints = false
+//        preExpenseView.translatesAutoresizingMaskIntoConstraints = false
+//        nextExpenseView.translatesAutoresizingMaskIntoConstraints = false
         
 
-        self.scrollView.addSubview(expenseView)
-        self.scrollView.addSubview(preExpenseView)
-        self.scrollView.addSubview(afterExpenseView)
+//        self.scrollView.addSubview(expenseViewController)
+//        self.scrollView.addSubview(preExpenseView)
+//        self.scrollView.addSubview(nextExpenseViewController)
+//        
+//        self.scrollView.layoutIfNeeded()
         
-        setExpenseViewConstraints(expenseView)
-        setExpenseViewConstraints(preExpenseView)
-        setExpenseViewConstraints(afterExpenseView)
+//        setExpenseViewConstraints(expenseView)
+//        setExpenseViewConstraints(preExpenseView)
+//        setExpenseViewConstraints(nextExpenseView)
         
-        expenseView.tableView.backgroundColor = UIColor.grayColor()
-        preExpenseView.tableView.backgroundColor = UIColor.greenColor()
-        afterExpenseView.tableView.backgroundColor = UIColor.blackColor()
+//        expenseViewController.tableView.backgroundColor = UIColor.grayColor()
+//        preExpenseView.tableView.backgroundColor = UIColor.greenColor()
+//        nextExpenseViewController.tableView.backgroundColor = UIColor.blackColor()
         
-        let expenseViewPositionConstraint = NSLayoutConstraint(item: expenseView, attribute: .LeadingMargin, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: self.scrollView.bounds.width)
-        self.scrollView.addConstraint(expenseViewPositionConstraint)
-        
-        let preExpenseViewPositionConstraint = NSLayoutConstraint(item: preExpenseView, attribute: .Leading, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: 0)
-        self.scrollView.addConstraint(preExpenseViewPositionConstraint)
-        
-        let afterExpenseViewPositionConstraint = NSLayoutConstraint(item: afterExpenseView, attribute: .Leading, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: 0)
-        self.scrollView.addConstraint(afterExpenseViewPositionConstraint)
-        
-        
-        
-        
+//        let expenseViewPositionConstraint = NSLayoutConstraint(item: expenseView, attribute: .LeadingMargin, relatedBy: .Equal, toItem: preExpenseView, attribute: .Trailing, multiplier: 1, constant: 0)
+//        self.scrollView.addConstraint(expenseViewPositionConstraint)
+//        
+//        let preExpenseViewPositionConstraint = NSLayoutConstraint(item: preExpenseView, attribute: .Leading, relatedBy: .Equal, toItem: self.scrollView, attribute: .Leading, multiplier: 1, constant: 0)
+//        self.scrollView.addConstraint(preExpenseViewPositionConstraint)
+//        
+//        let nextExpenseViewPositionConstraint = NSLayoutConstraint(item: nextExpenseView, attribute: .Trailing, relatedBy: .Equal, toItem: self.scrollView, attribute: .Trailing, multiplier: 1, constant: 0)
+//        self.scrollView.addConstraint(nextExpenseViewPositionConstraint)
         
         
-        
-        
-        self.scrollView.layoutIfNeeded()
     }
     
-    func setExpenseViewConstraints(expenseView: ExpenseView) {
-        let topConstraint = NSLayoutConstraint(item: expenseView, attribute: .Top, relatedBy: .Equal, toItem: self.scrollView, attribute: .Top, multiplier: 1, constant: 0)
-        self.scrollView.addConstraint(topConstraint)
-        
-        let heightConstraint = NSLayoutConstraint(item: expenseView, attribute: .Height, relatedBy: .Equal, toItem: self.scrollView, attribute: .Height, multiplier: 1, constant: 0)
-        self.scrollView.addConstraint(heightConstraint)
-        
-        let widthConstraint = NSLayoutConstraint(item: expenseView, attribute: .Width, relatedBy: .Equal, toItem: self.scrollView, attribute: .Width, multiplier: 1, constant: 0)
-        self.scrollView.addConstraint(widthConstraint)
-    }
+//    func setExpenseViewConstraints(expenseView: ExpenseView) {
+//        let topConstraint = NSLayoutConstraint(item: expenseView, attribute: .Top, relatedBy: .Equal, toItem: self.scrollView, attribute: .Top, multiplier: 1, constant: 0)
+//        self.scrollView.addConstraint(topConstraint)
+//        
+//        let heightConstraint = NSLayoutConstraint(item: expenseView, attribute: .Height, relatedBy: .Equal, toItem: self.scrollView, attribute: .Height, multiplier: 1, constant: 0)
+//        self.scrollView.addConstraint(heightConstraint)
+//        
+//        let widthConstraint = NSLayoutConstraint(item: expenseView, attribute: .Width, relatedBy: .Equal, toItem: self.scrollView, attribute: .Width, multiplier: 1, constant: 0)
+//        self.scrollView.addConstraint(widthConstraint)
+//    }
    
 }
