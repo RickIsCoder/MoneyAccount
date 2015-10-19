@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 将coreDataStack传给viewController
         if let tabBarController: UITabBarController = self.window!.rootViewController! as? UITabBarController {
             if let navVCon = tabBarController.viewControllers![0] as? UINavigationController {
-                if let accountViewController = navVCon.visibleViewController as? AccountViewController {
-                    accountViewController.coreDataStack = coreDataStack
+                if let expenseViewController = navVCon.visibleViewController as? ExpenseViewController {
+                    expenseViewController.coreDataStack = coreDataStack
                 }
             }
         }

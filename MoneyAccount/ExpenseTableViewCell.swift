@@ -1,15 +1,19 @@
 //
-//  AccountTablevViewCell.swift
+//  ExpenseTableViewCell.swift
 //  MoneyAccount
 //
-//  Created by Rick on 15/9/23.
+//  Created by Rick on 15/10/19.
 //  Copyright © 2015年 Rick. All rights reserved.
 //
 
 import UIKit
 
-class ExpenseTableCell: UITableViewCell {
+class ExpenseTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var paymentTypeName: UILabel!
+    @IBOutlet weak var paymentAccount: UILabel!
+    @IBOutlet weak var paymentTypeIcon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,9 +24,5 @@ class ExpenseTableCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    @IBOutlet weak var paymentTypeIcon: UIImageView!
-    @IBOutlet weak var paymentAccount: UILabel!
-    @IBOutlet weak var paymentTypeName: UILabel!
 
 }
