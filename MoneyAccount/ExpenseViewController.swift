@@ -1,5 +1,5 @@
 //
-//  AccountViewController.swift
+//  ExpenseViewController.swift
 //  MoneyAccount
 //
 //  Created by Rick on 15/9/15.
@@ -14,22 +14,10 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
     @IBOutlet weak var homepageBgUIView: UIView!
     
     var pageViewController: UIPageViewController!
-//    @IBOutlet weak var tableView: UITableView! {
-//        didSet {
-//            tableView.dataSource = self
-//            tableView.delegate = self
-//        }
-//    }
     
-    var currentDay: String!
-    var moneyAccounts: [MoneyAccount]! = []
     var coreDataStack: CoreDataStack!
     
-    let SelectedTableViewCellHeight: CGFloat = 90
-    let UnSelectedTableViewCellHeight: CGFloat = 45
-    var selectedCellIndexPath: NSIndexPath?
-    
-    @IBOutlet weak var currentDayPaymentCount: UILabel!
+    @IBOutlet weak var currentDay: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +39,7 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
         
-        currentDay = getCurrentDay(NSDate())
+        currentDay.text = getCurrentDay(NSDate())
         
         
         
@@ -67,77 +55,13 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
         return currentDay
     }
     
-    // 异步查找数据
-    private func getDataForCurrentDay() {
-        let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.MoneyAccountEntity)
-        accountFetch.predicate = NSPredicate(format: "accountDay == %@", currentDay)
-        
-        let asyncFetchRequest: NSAsynchronousFetchRequest! = NSAsynchronousFetchRequest(fetchRequest: accountFetch) {
-            [unowned self]
-            (result: NSAsynchronousFetchResult!) -> Void in
-            self.moneyAccounts = result.finalResult as! [MoneyAccount]
-//            self.tableView.reloadData()
-            
-            var sumPayment:Float = 0
-            for item in self.moneyAccounts {
-                sumPayment = Float(item.payment!) + sumPayment
-            }
-            self.currentDayPaymentCount.text = "\(sumPayment)"
-        }
-        do {
-            try coreDataStack.context.executeRequest(asyncFetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)", terminator: "")
-        }
-    }
-    
     private func setBgImageForView() {
         let bgColor: UIColor = UIColor(patternImage: UIImage(named: "BGImage")!)
 //        homepageBgUIView.backgroundColor = bgColor
 //        tableView.backgroundColor = bgColor
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == ConstantsData.SegueNames.addNewAccountVCSegue {
-            if let addNewAccountVCon = segue.destinationViewController as? AddNewAccountViewController {
-                addNewAccountVCon.coreDataStack = coreDataStack
-            }
-        }
-    }
-    
-    // MARK: - table view
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ConstantsData.Identifiers.accountTableViewCell)! as! ExpenseTableViewCell
-        cell.paymentAccount.text = "\(moneyAccounts[indexPath.row].payment!)"
-        if moneyAccounts[indexPath.row].paymentType != nil {
-            cell.paymentTypeName.text = "\(moneyAccounts[indexPath.row].paymentType!.typeName!)"
-            cell.paymentTypeIcon.image = UIImage(named: moneyAccounts[indexPath.row].paymentType!.typeIconName!)
-        }
         
-        cell.backgroundColor = UIColor.clearColor()
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moneyAccounts.count
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if selectedCellIndexPath != nil {
-            if selectedCellIndexPath == indexPath {
-                return SelectedTableViewCellHeight
-            }
-        }
-        return UnSelectedTableViewCellHeight
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCellIndexPath = indexPath
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-    
     
     // MARK: - UIPageViewController
     
@@ -148,6 +72,8 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
         
         let contentVC: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier(ConstantsData.Identifiers.ContentVC) as! ContentViewController
         contentVC.pageIndex = index
+        contentVC.day = currentDay.text
+        contentVC.coreDataStack = coreDataStack
         
         return contentVC
     }

@@ -13,11 +13,11 @@ struct ConstantsData {
         static let PaymentTypeEntity = "PaymentType"
     }
     enum SegueNames {
-        static let addNewAccountVCSegue = "addNewAccount"
+        static let addNewAccountVCSegue = "addNewExpense"
     }
     enum Identifiers {
         static let CollectionCell = "CollectionCell"
-        static let accountTableViewCell = "accountTableViewCell"
+        static let expenseTableViewCell = "expenseTableViewCell"
         static let HomePagePVC = "HomePagePVC"
         static let ContentVC = "ContentVC"
     }
