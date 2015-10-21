@@ -11,6 +11,7 @@ import CoreData
 
 class AddNewAccountViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate
 {
+    var dateForCurrentPage: NSDate!
 
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -107,7 +108,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
     // add new account
     @IBAction func addAccount(sender: AnyObject) {
         // set id
-        let date = NSDate()
+        let date = self.dateForCurrentPage
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyyMMddhhmmss"
         let dateString = dateFormatter.stringFromDate(date)
@@ -118,10 +119,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         newAccount.payment = Float(payment.text!)
         newAccount.paymentType = paymentTypeSelected
         
-        let dateFormatter1 = NSDateFormatter()
-        dateFormatter1.dateFormat = "yyyy-MM-dd"
-        
-        newAccount.accountDay = dateFormatter1.stringFromDate(date)
+        newAccount.accountDay = getStringDateUseFomatter(date)
         newAccount.accountDate = date
         
         print(newAccount)

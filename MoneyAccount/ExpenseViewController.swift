@@ -9,23 +9,56 @@
 import UIKit
 import CoreData
 
-class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
+class ExpenseViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
     @IBOutlet weak var homepageBgUIView: UIView!
     
-    var pageViewController: UIPageViewController!
+    var pageViewController: UIPageViewController! {
+        didSet {
+            self.pageViewController.dataSource = self
+            self.pageViewController.delegate = self
+        }
+    }
+    
+    var nextPage: ContentViewController!
     
     var coreDataStack: CoreDataStack!
     
     @IBOutlet weak var currentDay: UILabel!
     
+    var DateForCurrentShowingPage: NSDate! {
+        willSet {
+            currentDay.text = getStringDateUseFomatter(newValue)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier(ConstantsData.Identifiers.HomePagePVC) as! UIPageViewController
-        self.pageViewController.dataSource = self
+        DateForCurrentShowingPage = NSDate()
+        initUIPageVC()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(false)
         
-        let startVC = self.createViewControllerAtIndex(0) as ContentViewController
+//        setBgImageForView()
+    }
+    
+    
+    private func setBgImageForView() {
+        let bgColor: UIColor = UIColor(patternImage: UIImage(named: "BGImage")!)
+        //        homepageBgUIView.backgroundColor = bgColor
+        //        tableView.backgroundColor = bgColor
+    }
+
+    
+    // MARK: - UIPageViewController
+    // init UIPageViewController 
+    func initUIPageVC() {
+        self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier(ConstantsData.Identifiers.HomePagePVC) as! UIPageViewController
+        
+        let startVC = self.createViewControllerAtIndex(2, dateForNewContent: DateForCurrentShowingPage) as ContentViewController
         let viewControllers = NSArray(object: startVC)
         
         self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
@@ -36,48 +69,21 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
         self.pageViewController.didMoveToParentViewController(self)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(false)
-        
-        currentDay.text = getCurrentDay(NSDate())
-        
-        
-        
-//        setBgImageForView()
-//        getDataForCurrentDay()
-    }
-    
-    
-    private func getCurrentDay(date: NSDate) -> String {
-        let dateFomatter = NSDateFormatter()
-        dateFomatter.dateFormat = "yyyy-MM-dd"
-        let currentDay = dateFomatter.stringFromDate(NSDate())
-        return currentDay
-    }
-    
-    private func setBgImageForView() {
-        let bgColor: UIColor = UIColor(patternImage: UIImage(named: "BGImage")!)
-//        homepageBgUIView.backgroundColor = bgColor
-//        tableView.backgroundColor = bgColor
-    }
-
-        
-    
-    // MARK: - UIPageViewController
-    
-    func createViewControllerAtIndex(index: Int) -> ContentViewController {
-        if index < 0 || index >= 3 {
+    // Create ContentViewController
+    func createViewControllerAtIndex(index: Int, dateForNewContent date: NSDate) -> ContentViewController {
+        if index < 0 || index >= 5 {
             return ContentViewController()
         }
         
         let contentVC: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier(ConstantsData.Identifiers.ContentVC) as! ContentViewController
         contentVC.pageIndex = index
-        contentVC.day = currentDay.text
+        contentVC.pageDate = date
         contentVC.coreDataStack = coreDataStack
         
         return contentVC
     }
     
+    // DataSource
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         let contentVC = viewController as! ContentViewController
         var index = contentVC.pageIndex as Int
@@ -88,28 +94,46 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource
         
         index--
         
-        return createViewControllerAtIndex(index)
+        let nextDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -1, toDate: DateForCurrentShowingPage, options: NSCalendarOptions(rawValue: 0))
+        return createViewControllerAtIndex(index, dateForNewContent: nextDate!)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         let contentVC = viewController as! ContentViewController
         var index = contentVC.pageIndex as Int
         
-        if index == NSNotFound || index == 2 {
+        if index == NSNotFound || index == 5 {
             return nil
         }
         
         index++
         
-        return createViewControllerAtIndex(index)
+        let nextDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: 1, toDate: DateForCurrentShowingPage, options: NSCalendarOptions(rawValue: 0))
+        return createViewControllerAtIndex(index, dateForNewContent: nextDate!)
     }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return 3
+        return 5
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
         return 0
     }
-
+    
+    // Delegate
+    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+        self.nextPage = pendingViewControllers[0] as! ContentViewController
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            DateForCurrentShowingPage = self.nextPage.pageDate
+            
+            self.nextPage.getDataForCurrentPage()
+            
+            if self.nextPage.pageIndex == 4 || self.nextPage.pageIndex == 0 {
+               initUIPageVC()
+            }
+        }
+    }
 }

@@ -25,6 +25,7 @@
 		1DC357F11BAA9FA7006D0FD0 /* ParseCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC357F01BAA9FA7006D0FD0 /* ParseCSV.swift */; };
 		1DD39D7B1BA94EA1007D2457 /* ConstantsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD39D7A1BA94EA1007D2457 /* ConstantsData.swift */; };
 		1DD39D7D1BA98B3B007D2457 /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD39D7C1BA98B3B007D2457 /* AddNewAccountViewController.swift */; };
+		1DE5777A1BD795D3009751E6 /* DateFomatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE577791BD795D3009751E6 /* DateFomatter.swift */; settings = {ASSET_TAGS = (); }; };
 		1DE7064A1BD4D013001C2E2D /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE706491BD4D013001C2E2D /* ExpenseTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		1DC357F01BAA9FA7006D0FD0 /* ParseCSV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseCSV.swift; sourceTree = "<group>"; };
 		1DD39D7A1BA94EA1007D2457 /* ConstantsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantsData.swift; sourceTree = "<group>"; };
 		1DD39D7C1BA98B3B007D2457 /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
+		1DE577791BD795D3009751E6 /* DateFomatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFomatter.swift; sourceTree = "<group>"; };
 		1DE706491BD4D013001C2E2D /* ExpenseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				1DB22EC71BB14A3000B45916 /* MoneyAccount.swift */,
 				1D1A0F211BA6AAF30033F020 /* MoneyAccount.xcdatamodeld */,
 				1DD39D7A1BA94EA1007D2457 /* ConstantsData.swift */,
+				1DE577791BD795D3009751E6 /* DateFomatter.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				1DD39D7B1BA94EA1007D2457 /* ConstantsData.swift in Sources */,
 				1DB22ECB1BB14A3000B45916 /* MoneyAccount.swift in Sources */,
 				1D83CF2E1BA815E6006C4F5A /* ExpenseViewController.swift in Sources */,
+				1DE5777A1BD795D3009751E6 /* DateFomatter.swift in Sources */,
 				1D1A0F431BA6AB4F0033F020 /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

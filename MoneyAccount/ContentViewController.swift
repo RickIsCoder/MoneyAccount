@@ -12,7 +12,6 @@ import CoreData
 class ContentViewController: UIViewController, UITableViewDataSource {
 
     var pageIndex: Int!
-    var day: String!
     var pageDate: NSDate!
 
     var moneyAccounts: [MoneyAccount]! = []
@@ -31,22 +30,22 @@ class ContentViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var currentDayPaymentCount: UILabel!
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         
-        getDataForCurrentDay()
+        getDataForCurrentPage()
     }
     
     // 异步查找数据
-    private func getDataForCurrentDay() {
+    func getDataForCurrentPage() {
         let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.MoneyAccountEntity)
-        //accountFetch.predicate = NSPredicate(format: "accountDay == %@", day)
+        accountFetch.predicate = NSPredicate(format: "accountDay == %@", getStringDateUseFomatter(pageDate))
         
         let asyncFetchRequest: NSAsynchronousFetchRequest! = NSAsynchronousFetchRequest(fetchRequest: accountFetch) {
             [unowned self]
             (result: NSAsynchronousFetchResult!) -> Void in
             self.moneyAccounts = result.finalResult as! [MoneyAccount]
-            //            self.tableView.reloadData()
+            self.tableView.reloadData()
             
             var sumPayment:Float = 0
             for item in self.moneyAccounts {
@@ -103,6 +102,7 @@ class ContentViewController: UIViewController, UITableViewDataSource {
         if segue.identifier == ConstantsData.SegueNames.addNewAccountVCSegue {
             if let addNewAccountVCon = segue.destinationViewController as? AddNewAccountViewController {
                 addNewAccountVCon.coreDataStack = coreDataStack
+                addNewAccountVCon.dateForCurrentPage = pageDate
             }
         }
     }
