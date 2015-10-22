@@ -195,7 +195,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Goq-2u-wGR" userLabel="Expense label">
-                                                    <rect key="frame" x="550" y="12" width="42" height="21"/>
+                                                    <rect key="frame" x="550" y="12" width="42" height="20.5"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -210,7 +210,14 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdh-gE-3hx">
-                                                    <rect key="frame" x="56" y="12" width="42" height="21"/>
+                                                    <rect key="frame" x="56" y="12" width="42" height="20.5"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tl4-ux-bbg">
+                                                    <rect key="frame" x="8" y="52" width="94.5" height="20.5"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -219,19 +226,27 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
+                                                <constraint firstItem="tl4-ux-bbg" firstAttribute="top" secondItem="4eB-fF-EXj" secondAttribute="bottom" constant="10" id="Ji8-Rz-YtJ"/>
                                                 <constraint firstItem="bdh-gE-3hx" firstAttribute="centerY" secondItem="kA0-ec-fhK" secondAttribute="centerY" id="KaT-x0-YWe"/>
                                                 <constraint firstItem="4eB-fF-EXj" firstAttribute="leading" secondItem="kA0-ec-fhK" secondAttribute="leadingMargin" id="Pej-PW-gYd"/>
                                                 <constraint firstItem="bdh-gE-3hx" firstAttribute="top" secondItem="kA0-ec-fhK" secondAttribute="topMargin" constant="4" id="Vqv-5V-CyL"/>
+                                                <constraint firstItem="tl4-ux-bbg" firstAttribute="leading" secondItem="kA0-ec-fhK" secondAttribute="leadingMargin" id="dBt-um-VFd"/>
                                                 <constraint firstItem="4eB-fF-EXj" firstAttribute="centerY" secondItem="bdh-gE-3hx" secondAttribute="centerY" id="dQ7-jo-LIA"/>
                                                 <constraint firstItem="Goq-2u-wGR" firstAttribute="baseline" secondItem="bdh-gE-3hx" secondAttribute="baseline" id="eqH-i7-KdX"/>
                                                 <constraint firstItem="bdh-gE-3hx" firstAttribute="leading" secondItem="4eB-fF-EXj" secondAttribute="trailing" constant="8" symbolic="YES" id="kTT-le-yXR"/>
                                                 <constraint firstItem="bdh-gE-3hx" firstAttribute="firstBaseline" secondItem="Goq-2u-wGR" secondAttribute="firstBaseline" id="xPe-VV-MKb"/>
                                                 <constraint firstItem="Goq-2u-wGR" firstAttribute="trailing" secondItem="kA0-ec-fhK" secondAttribute="trailingMargin" id="xhS-zB-5ej"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="KaT-x0-YWe"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
                                             <outlet property="paymentAccount" destination="Goq-2u-wGR" id="a6R-Rt-IMl"/>
+                                            <outlet property="paymentDetial" destination="tl4-ux-bbg" id="jWd-qw-ohd"/>
                                             <outlet property="paymentTypeIcon" destination="4eB-fF-EXj" id="rLk-hp-qvO"/>
                                             <outlet property="paymentTypeName" destination="bdh-gE-3hx" id="y5g-bu-YPa"/>
                                         </connections>

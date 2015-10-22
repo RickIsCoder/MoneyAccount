@@ -13,6 +13,10 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var paymentTypeName: UILabel!
     @IBOutlet weak var paymentAccount: UILabel!
     @IBOutlet weak var paymentTypeIcon: UIImageView!
+    @IBOutlet weak var paymentDetial: UILabel!
+
+    var hasDetail: Bool = false
+    var detailOnShow: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()

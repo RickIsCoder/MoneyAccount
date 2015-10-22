@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ContentViewController: UIViewController, UITableViewDataSource {
+class ContentViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var pageIndex: Int!
     var pageDate: NSDate!
@@ -20,11 +20,13 @@ class ContentViewController: UIViewController, UITableViewDataSource {
     let SelectedTableViewCellHeight: CGFloat = 90
     let UnSelectedTableViewCellHeight: CGFloat = 45
     var selectedCellIndexPath: NSIndexPath?
+    var preSelectedCellIndexPath: NSIndexPath?
     
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
+            tableView.delegate = self
         }
     }
     @IBOutlet weak var currentDayPaymentCount: UILabel!
@@ -70,6 +72,13 @@ class ContentViewController: UIViewController, UITableViewDataSource {
             cell.paymentTypeName.text = "\(moneyAccounts[indexPath.row].paymentType!.typeName!)"
             cell.paymentTypeIcon.image = UIImage(named: moneyAccounts[indexPath.row].paymentType!.typeIconName!)
         }
+        if moneyAccounts[indexPath.row].accountDescription == nil {
+            cell.hasDetail = false
+        } else {
+            cell.hasDetail = true
+            cell.paymentDetial.text = moneyAccounts[indexPath.row].accountDescription
+        }
+        
         
         cell.backgroundColor = UIColor.clearColor()
         return cell
@@ -82,6 +91,13 @@ class ContentViewController: UIViewController, UITableViewDataSource {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selectedCellIndexPath != nil {
             if selectedCellIndexPath == indexPath {
+                if preSelectedCellIndexPath == selectedCellIndexPath {
+                    preSelectedCellIndexPath = nil
+                    selectedCellIndexPath = nil
+                    return UnSelectedTableViewCellHeight
+                }
+                preSelectedCellIndexPath = selectedCellIndexPath
+                selectedCellIndexPath = nil
                 return SelectedTableViewCellHeight
             }
         }
@@ -89,10 +105,12 @@ class ContentViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCellIndexPath = indexPath
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        let cell = tableView.cellForRowAtIndexPath(indexPath)! as! ExpenseTableViewCell
+        if cell.hasDetail {
+            selectedCellIndexPath = indexPath
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
     }
 
 
