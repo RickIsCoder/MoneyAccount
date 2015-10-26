@@ -38,35 +38,26 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource, U
         DateForCurrentShowingPage = NSDate()
         initUIPageVC()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(false)
-        
-//        setBgImageForView()
-    }
-    
-    
-    private func setBgImageForView() {
-        let bgColor: UIColor = UIColor(patternImage: UIImage(named: "BGImage")!)
-        //        homepageBgUIView.backgroundColor = bgColor
-        //        tableView.backgroundColor = bgColor
-    }
-
-    
+      
     // MARK: - UIPageViewController
     // init UIPageViewController 
     func initUIPageVC() {
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier(ConstantsData.Identifiers.HomePagePVC) as! UIPageViewController
-        
         let startVC = self.createViewControllerAtIndex(2, dateForNewContent: DateForCurrentShowingPage) as ContentViewController
         let viewControllers = NSArray(object: startVC)
         
         self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
         self.pageViewController.view.frame = CGRectMake(0, 187, self.view.frame.size.width, self.view.frame.size.height - 197)
-        
         self.addChildViewController(self.pageViewController)
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMoveToParentViewController(self)
+    }
+    
+    // set UIPageViewController
+    func reSetUIPageVC() {
+        self.pageViewController.view.removeFromSuperview()
+        self.pageViewController.removeFromParentViewController()
+        initUIPageVC()
     }
     
     // Create ContentViewController
@@ -79,11 +70,11 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource, U
         contentVC.pageIndex = index
         contentVC.pageDate = date
         contentVC.coreDataStack = coreDataStack
-        
+    
         return contentVC
     }
     
-    // DataSource
+    // PageViewController DataSource
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         let contentVC = viewController as! ContentViewController
         var index = contentVC.pageIndex as Int
@@ -120,7 +111,7 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource, U
         return 0
     }
     
-    // Delegate
+    // PageViewController Delegate
     func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
         self.nextPage = pendingViewControllers[0] as! ContentViewController
     }
@@ -132,7 +123,7 @@ class ExpenseViewController: UIViewController, UIPageViewControllerDataSource, U
             self.nextPage.getDataForCurrentPage()
             
             if self.nextPage.pageIndex == 4 || self.nextPage.pageIndex == 0 {
-               initUIPageVC()
+                reSetUIPageVC()
             }
         }
     }

@@ -31,11 +31,17 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     @IBOutlet weak var currentDayPaymentCount: UILabel!
     
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+       
+        self.tableView.backgroundColor = UIColor(patternImage: (UIImage(named: "BGImage"))!)
         
         getDataForCurrentPage()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
     }
     
     // 异步查找数据
