@@ -9,8 +9,8 @@
 
 struct ConstantsData {
     enum EntityNames {
-        static let MoneyAccountEntity = "MoneyAccount"
-        static let PaymentTypeEntity = "PaymentType"
+        static let AmountEntity = "Amount"
+        static let AmountTypeEntity = "AmountType"
     }
     enum SegueNames {
         static let addNewAccountVCSegue = "addNewExpense"

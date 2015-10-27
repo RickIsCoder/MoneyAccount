@@ -14,7 +14,7 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
     var pageIndex: Int!
     var pageDate: NSDate!
 
-    var moneyAccounts: [MoneyAccount]! = []
+    var moneyAmounts: [Amount]! = []
     var coreDataStack: CoreDataStack!
     
     let SelectedTableViewCellHeight: CGFloat = 90
@@ -46,18 +46,18 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // 异步查找数据
     func getDataForCurrentPage() {
-        let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.MoneyAccountEntity)
-        accountFetch.predicate = NSPredicate(format: "accountDay == %@", getStringDateUseFomatter(pageDate))
+        let accountFetch = NSFetchRequest(entityName: ConstantsData.EntityNames.AmountEntity)
+        accountFetch.predicate = NSPredicate(format: "day == %@", getStringDateUseFomatter(pageDate))
         
         let asyncFetchRequest: NSAsynchronousFetchRequest! = NSAsynchronousFetchRequest(fetchRequest: accountFetch) {
             [unowned self]
             (result: NSAsynchronousFetchResult!) -> Void in
-            self.moneyAccounts = result.finalResult as! [MoneyAccount]
+            self.moneyAmounts = result.finalResult as! [Amount]
             self.tableView.reloadData()
             
             var sumPayment:Float = 0
-            for item in self.moneyAccounts {
-                sumPayment = Float(item.payment!) + sumPayment
+            for item in self.moneyAmounts {
+                sumPayment = Float(item.amount!) + sumPayment
             }
             self.currentDayPaymentCount.text = "\(sumPayment)"
         }
@@ -73,16 +73,16 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ConstantsData.Identifiers.expenseTableViewCell) as! ExpenseTableViewCell
-        cell.paymentAccount.text = "\(moneyAccounts[indexPath.row].payment!)"
-        if moneyAccounts[indexPath.row].paymentType != nil {
-            cell.paymentTypeName.text = "\(moneyAccounts[indexPath.row].paymentType!.typeName!)"
-            cell.paymentTypeIcon.image = UIImage(named: moneyAccounts[indexPath.row].paymentType!.typeIconName!)
+        cell.paymentAccount.text = "\(moneyAmounts[indexPath.row].amount!)"
+        if moneyAmounts[indexPath.row].amountType != nil {
+            cell.paymentTypeName.text = "\(moneyAmounts[indexPath.row].amountType!.typeName!)"
+            cell.paymentTypeIcon.image = UIImage(named: moneyAmounts[indexPath.row].amountType!.typeIconName!)
         }
-        if moneyAccounts[indexPath.row].accountDescription == nil {
+        if moneyAmounts[indexPath.row].amountDescription == nil {
             cell.hasDetail = false
         } else {
             cell.hasDetail = true
-            cell.paymentDetial.text = moneyAccounts[indexPath.row].accountDescription
+            cell.paymentDetial.text = moneyAmounts[indexPath.row].amountDescription
         }
         
         
@@ -91,7 +91,7 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moneyAccounts.count
+        return moneyAmounts.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -8,25 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		1D1A0F201BA6AAF30033F020 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1A0F1F1BA6AAF30033F020 /* AppDelegate.swift */; };
-		1D1A0F231BA6AAF30033F020 /* MoneyAccount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D1A0F211BA6AAF30033F020 /* MoneyAccount.xcdatamodeld */; };
 		1D1A0F281BA6AAF30033F020 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D1A0F261BA6AAF30033F020 /* Main.storyboard */; settings = {ASSET_TAGS = (1, 2, ); }; };
 		1D1A0F2A1BA6AAF30033F020 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D1A0F291BA6AAF30033F020 /* Images.xcassets */; };
 		1D1A0F2D1BA6AAF30033F020 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1A0F2B1BA6AAF30033F020 /* LaunchScreen.xib */; };
 		1D1A0F391BA6AAF30033F020 /* MoneyAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1A0F381BA6AAF30033F020 /* MoneyAccountTests.swift */; };
 		1D1A0F431BA6AB4F0033F020 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1A0F421BA6AB4F0033F020 /* CoreDataStack.swift */; };
-		1D7417A21BB3E45700AC37DE /* PaymentTypesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7417A11BB3E45700AC37DE /* PaymentTypesCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		1D5014C51BDF5E6000E98B44 /* Amount+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5014C11BDF5E6000E98B44 /* Amount+CoreDataProperties.swift */; };
+		1D5014C61BDF5E6000E98B44 /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5014C21BDF5E6000E98B44 /* Amount.swift */; };
+		1D5014C71BDF5E6000E98B44 /* AmountType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5014C31BDF5E6000E98B44 /* AmountType+CoreDataProperties.swift */; };
+		1D5014C81BDF5E6000E98B44 /* AmountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5014C41BDF5E6000E98B44 /* AmountType.swift */; };
+		1D5014CB1BDF76C200E98B44 /* Amount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D5014C91BDF76C200E98B44 /* Amount.xcdatamodeld */; };
+		1D7417A21BB3E45700AC37DE /* PaymentTypesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7417A11BB3E45700AC37DE /* PaymentTypesCollectionViewCell.swift */; };
 		1D83CF2E1BA815E6006C4F5A /* ExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D83CF2D1BA815E6006C4F5A /* ExpenseViewController.swift */; };
-		1D9403DE1BD10D4D0029DFCA /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9403DD1BD10D4D0029DFCA /* ContentViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		1DB22EC81BB14A3000B45916 /* PaymentType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB22EC41BB14A3000B45916 /* PaymentType+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
-		1DB22EC91BB14A3000B45916 /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB22EC51BB14A3000B45916 /* PaymentType.swift */; settings = {ASSET_TAGS = (); }; };
-		1DB22ECA1BB14A3000B45916 /* MoneyAccount+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB22EC61BB14A3000B45916 /* MoneyAccount+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
-		1DB22ECB1BB14A3000B45916 /* MoneyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB22EC71BB14A3000B45916 /* MoneyAccount.swift */; settings = {ASSET_TAGS = (); }; };
+		1D9403DE1BD10D4D0029DFCA /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9403DD1BD10D4D0029DFCA /* ContentViewController.swift */; };
 		1DC357EF1BAA9EF0006D0FD0 /* paymentDefaultType.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1DC357EE1BAA9EF0006D0FD0 /* paymentDefaultType.csv */; };
 		1DC357F11BAA9FA7006D0FD0 /* ParseCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC357F01BAA9FA7006D0FD0 /* ParseCSV.swift */; };
 		1DD39D7B1BA94EA1007D2457 /* ConstantsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD39D7A1BA94EA1007D2457 /* ConstantsData.swift */; };
 		1DD39D7D1BA98B3B007D2457 /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD39D7C1BA98B3B007D2457 /* AddNewAccountViewController.swift */; };
-		1DE5777A1BD795D3009751E6 /* DateFomatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE577791BD795D3009751E6 /* DateFomatter.swift */; settings = {ASSET_TAGS = (); }; };
-		1DE7064A1BD4D013001C2E2D /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE706491BD4D013001C2E2D /* ExpenseTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		1DE5777A1BD795D3009751E6 /* DateFomatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE577791BD795D3009751E6 /* DateFomatter.swift */; };
+		1DE7064A1BD4D013001C2E2D /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE706491BD4D013001C2E2D /* ExpenseTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,6 @@
 		1D1A0F1A1BA6AAF30033F020 /* MoneyAccount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyAccount.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1A0F1E1BA6AAF30033F020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D1A0F1F1BA6AAF30033F020 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1D1A0F221BA6AAF30033F020 /* MoneyAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoneyAccount.xcdatamodel; sourceTree = "<group>"; };
 		1D1A0F271BA6AAF30033F020 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D1A0F291BA6AAF30033F020 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D1A0F2C1BA6AAF30033F020 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -51,13 +50,14 @@
 		1D1A0F371BA6AAF30033F020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D1A0F381BA6AAF30033F020 /* MoneyAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyAccountTests.swift; sourceTree = "<group>"; };
 		1D1A0F421BA6AB4F0033F020 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		1D5014C11BDF5E6000E98B44 /* Amount+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Amount+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1D5014C21BDF5E6000E98B44 /* Amount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
+		1D5014C31BDF5E6000E98B44 /* AmountType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AmountType+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1D5014C41BDF5E6000E98B44 /* AmountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountType.swift; sourceTree = "<group>"; };
+		1D5014CA1BDF76C200E98B44 /* Amount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Amount.xcdatamodel; sourceTree = "<group>"; };
 		1D7417A11BB3E45700AC37DE /* PaymentTypesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTypesCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D83CF2D1BA815E6006C4F5A /* ExpenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseViewController.swift; sourceTree = "<group>"; };
 		1D9403DD1BD10D4D0029DFCA /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
-		1DB22EC41BB14A3000B45916 /* PaymentType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PaymentType+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1DB22EC51BB14A3000B45916 /* PaymentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
-		1DB22EC61BB14A3000B45916 /* MoneyAccount+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MoneyAccount+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1DB22EC71BB14A3000B45916 /* MoneyAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyAccount.swift; sourceTree = "<group>"; };
 		1DC357EE1BAA9EF0006D0FD0 /* paymentDefaultType.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = paymentDefaultType.csv; sourceTree = "<group>"; };
 		1DC357F01BAA9FA7006D0FD0 /* ParseCSV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseCSV.swift; sourceTree = "<group>"; };
 		1DD39D7A1BA94EA1007D2457 /* ConstantsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantsData.swift; sourceTree = "<group>"; };
@@ -151,13 +151,13 @@
 		1D1A0F441BA6AB7A0033F020 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1DB22EC41BB14A3000B45916 /* PaymentType+CoreDataProperties.swift */,
-				1DB22EC51BB14A3000B45916 /* PaymentType.swift */,
-				1DB22EC61BB14A3000B45916 /* MoneyAccount+CoreDataProperties.swift */,
-				1DB22EC71BB14A3000B45916 /* MoneyAccount.swift */,
-				1D1A0F211BA6AAF30033F020 /* MoneyAccount.xcdatamodeld */,
+				1D5014C11BDF5E6000E98B44 /* Amount+CoreDataProperties.swift */,
+				1D5014C21BDF5E6000E98B44 /* Amount.swift */,
+				1D5014C31BDF5E6000E98B44 /* AmountType+CoreDataProperties.swift */,
+				1D5014C41BDF5E6000E98B44 /* AmountType.swift */,
 				1DD39D7A1BA94EA1007D2457 /* ConstantsData.swift */,
 				1DE577791BD795D3009751E6 /* DateFomatter.swift */,
+				1D5014C91BDF76C200E98B44 /* Amount.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -269,21 +269,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB22ECA1BB14A3000B45916 /* MoneyAccount+CoreDataProperties.swift in Sources */,
-				1D1A0F231BA6AAF30033F020 /* MoneyAccount.xcdatamodeld in Sources */,
 				1DE7064A1BD4D013001C2E2D /* ExpenseTableViewCell.swift in Sources */,
 				1DD39D7D1BA98B3B007D2457 /* AddNewAccountViewController.swift in Sources */,
 				1D7417A21BB3E45700AC37DE /* PaymentTypesCollectionViewCell.swift in Sources */,
-				1DB22EC81BB14A3000B45916 /* PaymentType+CoreDataProperties.swift in Sources */,
 				1D1A0F201BA6AAF30033F020 /* AppDelegate.swift in Sources */,
+				1D5014C71BDF5E6000E98B44 /* AmountType+CoreDataProperties.swift in Sources */,
 				1D9403DE1BD10D4D0029DFCA /* ContentViewController.swift in Sources */,
-				1DB22EC91BB14A3000B45916 /* PaymentType.swift in Sources */,
+				1D5014C61BDF5E6000E98B44 /* Amount.swift in Sources */,
+				1D5014C51BDF5E6000E98B44 /* Amount+CoreDataProperties.swift in Sources */,
 				1DC357F11BAA9FA7006D0FD0 /* ParseCSV.swift in Sources */,
 				1DD39D7B1BA94EA1007D2457 /* ConstantsData.swift in Sources */,
-				1DB22ECB1BB14A3000B45916 /* MoneyAccount.swift in Sources */,
+				1D5014C81BDF5E6000E98B44 /* AmountType.swift in Sources */,
 				1D83CF2E1BA815E6006C4F5A /* ExpenseViewController.swift in Sources */,
 				1DE5777A1BD795D3009751E6 /* DateFomatter.swift in Sources */,
 				1D1A0F431BA6AB4F0033F020 /* CoreDataStack.swift in Sources */,
+				1D5014CB1BDF76C200E98B44 /* Amount.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,13 +500,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		1D1A0F211BA6AAF30033F020 /* MoneyAccount.xcdatamodeld */ = {
+		1D5014C91BDF76C200E98B44 /* Amount.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				1D1A0F221BA6AAF30033F020 /* MoneyAccount.xcdatamodel */,
+				1D5014CA1BDF76C200E98B44 /* Amount.xcdatamodel */,
 			);
-			currentVersion = 1D1A0F221BA6AAF30033F020 /* MoneyAccount.xcdatamodel */;
-			path = MoneyAccount.xcdatamodeld;
+			currentVersion = 1D5014CA1BDF76C200E98B44 /* Amount.xcdatamodel */;
+			path = Amount.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -19,17 +19,17 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
             collectionView.delegate = self
         }
     }
-    @IBOutlet weak var payment: UITextField! {
+    @IBOutlet weak var amount: UITextField! {
         didSet {
-            payment.delegate = self
+            amount.delegate = self
         }
     }
    
-    var paymentTypes: [PaymentType]! = []
+    var paymentTypes: [AmountType]! = []
     var coreDataStack: CoreDataStack!
-    var newAccount: MoneyAccount!
+    var newAmount: Amount!
     
-    var paymentTypeSelected: PaymentType!
+    var paymentTypeSelected: AmountType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +37,10 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         // get default type data
         getAccountType()
         
-        let monenyEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.MoneyAccountEntity, inManagedObjectContext: coreDataStack.context)
-        newAccount = MoneyAccount(entity: monenyEntity!, insertIntoManagedObjectContext: coreDataStack.context)
+        let monenyEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.AmountEntity, inManagedObjectContext: coreDataStack.context)
+        newAmount = Amount(entity: monenyEntity!, insertIntoManagedObjectContext: coreDataStack.context)
         
-        payment.becomeFirstResponder()
+        amount.becomeFirstResponder()
         self.addDoneButtonForTextField()
     }
 
@@ -51,12 +51,12 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
     
 
     private func getAccountType() {
-        let paymentTypeFetchRequest = NSFetchRequest(entityName: ConstantsData.EntityNames.PaymentTypeEntity)
+        let paymentTypeFetchRequest = NSFetchRequest(entityName: ConstantsData.EntityNames.AmountTypeEntity)
         
         let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: paymentTypeFetchRequest) {
             [unowned self]
             (result: NSAsynchronousFetchResult) -> Void in
-            self.paymentTypes = result.finalResult as! [PaymentType]
+            self.paymentTypes = result.finalResult as! [AmountType]
             self.collectionView.reloadData()
             // set default type
             self.paymentTypeSelected = self.paymentTypes[0]
@@ -114,15 +114,15 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         let dateString = dateFormatter.stringFromDate(date)
         let dateNub32 = Int64(dateString)
         let dateNub = NSNumber(longLong: dateNub32!)
-        newAccount.id = dateNub
+        newAmount.id = dateNub
         
-        newAccount.payment = Float(payment.text!)
-        newAccount.paymentType = paymentTypeSelected
+        newAmount.amount = Float(amount.text!)
+        newAmount.amountType = paymentTypeSelected
         
-        newAccount.accountDay = getStringDateUseFomatter(date)
-        newAccount.accountDate = date
+        newAmount.day = getStringDateUseFomatter(date)
+        newAmount.date = date
         
-        print(newAccount)
+        print(newAmount)
         
         do {
             try coreDataStack.context.save()
@@ -154,11 +154,11 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
         let items: [UIBarButtonItem] = [flexSpace,doneBarButton]
         doneBar.setItems(items, animated: false)
         
-        self.payment.inputAccessoryView = doneBar
+        self.amount.inputAccessoryView = doneBar
     }
     
     func doneBarAction() {
-        payment.resignFirstResponder()
+        amount.resignFirstResponder()
     }
 
 }

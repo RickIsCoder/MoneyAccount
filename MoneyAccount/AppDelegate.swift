@@ -138,15 +138,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Remove all data
             removeAllExitData()
             
-            let accountTypeEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.PaymentTypeEntity, inManagedObjectContext: coreDataStack.context)
+            let accountTypeEntity = NSEntityDescription.entityForName(ConstantsData.EntityNames.AmountTypeEntity, inManagedObjectContext: coreDataStack.context)
             do {
                 let items = try parseCSV(contentsOfURL, encoding: NSUTF8StringEncoding)
                 // Preload the menu items
                 for item in items {
-                    let accountType = PaymentType(entity:accountTypeEntity!, insertIntoManagedObjectContext: coreDataStack.context)
-                    accountType.typeName = item.typeName
-                    accountType.typeIconName = item.typeIconName
-                    accountType.typeDescription = item.typeDescription
+                    let amountType = AmountType(entity:accountTypeEntity!, insertIntoManagedObjectContext: coreDataStack.context)
+                    amountType.typeName = item.typeName
+                    amountType.typeIconName = item.typeIconName
+                    amountType.typeDescription = item.typeDescription
                     
                     coreDataStack.saveContext()
                 }
@@ -158,9 +158,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func removeAllExitData() {
         // Remove the existing items
-        let fetchRequest = NSFetchRequest(entityName: ConstantsData.EntityNames.PaymentTypeEntity)
+        let fetchRequest = NSFetchRequest(entityName: ConstantsData.EntityNames.AmountTypeEntity)
         do {
-            let items = (try coreDataStack.context.executeFetchRequest(fetchRequest)) as! [PaymentType]
+            let items = (try coreDataStack.context.executeFetchRequest(fetchRequest)) as! [AmountType]
             for item in items {
                 coreDataStack.context.deleteObject(item)
             }

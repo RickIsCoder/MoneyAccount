@@ -485,8 +485,8 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="amount" destination="6wf-qg-D3Q" id="bmk-tF-4vD"/>
                         <outlet property="collectionView" destination="Fd0-Cm-a6a" id="mGB-Zm-tkf"/>
-                        <outlet property="payment" destination="6wf-qg-D3Q" id="cTz-ga-kmV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAE-ue-g7d" userLabel="First Responder" sceneMemberID="firstResponder"/>

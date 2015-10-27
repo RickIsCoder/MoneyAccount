@@ -1,8 +1,8 @@
 //
-//  MoneyAccount+CoreDataProperties.swift
+//  Amount+CoreDataProperties.swift
 //  MoneyAccount
 //
-//  Created by Rick on 15/10/8.
+//  Created by Rick on 15/10/27.
 //  Copyright © 2015年 Rick. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,13 +12,13 @@
 import Foundation
 import CoreData
 
-extension MoneyAccount {
+extension Amount {
 
-    @NSManaged var accountDate: NSDate?
-    @NSManaged var accountDay: String?
-    @NSManaged var accountDescription: String?
+    @NSManaged var date: NSDate?
+    @NSManaged var day: String?
+    @NSManaged var amountDescription: String?
     @NSManaged var id: NSNumber?
-    @NSManaged var payment: NSNumber?
-    @NSManaged var paymentType: PaymentType?
+    @NSManaged var amount: NSNumber?
+    @NSManaged var amountType: AmountType?
 
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="Amount" representedClassName=".Amount" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="amountDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="amountType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AmountType" inverseName="amount" inverseEntity="AmountType" syncable="YES"/>
+    </entity>
+    <entity name="AmountType" representedClassName=".AmountType" syncable="YES">
+        <attribute name="isExpense" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="typeDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typeIconName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typeName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="amount" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Amount" inverseName="amountType" inverseEntity="Amount" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Amount" positionX="-423" positionY="-171" width="128" height="133"/>
+        <element name="AmountType" positionX="-164" positionY="-27" width="128" height="118"/>
+    </elements>
+</model>
