@@ -16,12 +16,18 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
 
     var moneyAmounts: [Amount]! = []
     var coreDataStack: CoreDataStack!
+    var totalCost: Float = 0
     
     let SelectedTableViewCellHeight: CGFloat = 90
     let UnSelectedTableViewCellHeight: CGFloat = 45
     var selectedCellIndexPath: NSIndexPath?
     var preSelectedCellIndexPath: NSIndexPath?
     
+    // item colors
+    let expenseColors = [UIColor(colorLiteralRed: 49/255, green: 123/255, blue: 114/255, alpha: 0.8),
+        UIColor(colorLiteralRed: 49/255, green: 123/255, blue: 114/255, alpha: 0.4)]
+    let incomeColors = [UIColor(colorLiteralRed: 41/255, green: 148/255, blue: 86/255, alpha: 0.8),
+        UIColor(colorLiteralRed: 41/255, green: 148/255, blue: 86/255, alpha: 0.4)]
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -55,11 +61,10 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
             self.moneyAmounts = result.finalResult as! [Amount]
             self.tableView.reloadData()
             
-            var sumPayment:Float = 0
             for item in self.moneyAmounts {
-                sumPayment = Float(item.amount!) + sumPayment
+                self.totalCost = Float(item.amount!) + self.totalCost
             }
-            self.currentDayPaymentCount.text = "\(sumPayment)"
+            self.currentDayPaymentCount.text = "\(self.totalCost)"
         }
         do {
             try coreDataStack.context.executeRequest(asyncFetchRequest)
@@ -85,8 +90,14 @@ class ContentViewController: UIViewController, UITableViewDataSource, UITableVie
             cell.paymentDetial.text = moneyAmounts[indexPath.row].amountDescription
         }
         
-        
         cell.backgroundColor = UIColor.clearColor()
+        cell.opaque = false
+        if indexPath.row % 2 == 0 {
+            cell.contentView.backgroundColor = self.expenseColors[0]
+        } else {
+            cell.contentView.backgroundColor = self.expenseColors[1]
+        }
+        
         return cell
     }
     

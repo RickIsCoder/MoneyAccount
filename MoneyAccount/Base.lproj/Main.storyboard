@@ -160,7 +160,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMK-sx-mlY" userLabel="sum">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMK-sx-mlY" userLabel="sum">
                                 <rect key="frame" x="0.0" y="90" width="600" height="60"/>
                                 <animations/>
                                 <constraints>
@@ -168,7 +168,6 @@
                                     <constraint firstAttribute="width" constant="136" id="jaI-Lv-CI7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="28"/>
-                                <color key="textColor" red="0.043714527750000003" green="0.4622431977" blue="0.47117152150000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -188,7 +187,7 @@
                                     <constraint firstAttribute="height" constant="366" id="ybV-zQ-K3k"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewCell" id="3u6-Sp-II0" customClass="ExpenseTableViewCell" customModule="MoneyAccount" customModuleProvider="target">
+                                    <tableViewCell opaque="NO" clipsSubviews="YES" alpha="0.050000000000000003" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewCell" id="3u6-Sp-II0" customClass="ExpenseTableViewCell" customModule="MoneyAccount" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3u6-Sp-II0" id="kA0-ec-fhK">

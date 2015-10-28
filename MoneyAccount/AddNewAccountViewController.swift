@@ -33,7 +33,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // get default type data
         getAccountType()
         
@@ -60,6 +60,7 @@ class AddNewAccountViewController: UIViewController, UICollectionViewDataSource,
             self.collectionView.reloadData()
             // set default type
             self.paymentTypeSelected = self.paymentTypes[0]
+            self.paymentTypeSelected.isExpense = true
         }
         do {
             try coreDataStack.context.executeRequest(asyncFetchRequest)
