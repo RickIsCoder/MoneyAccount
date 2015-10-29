@@ -490,7 +490,53 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAE-ue-g7d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2252" y="-1035"/>
+            <point key="canvasLocation" x="2892" y="-1721"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="urz-5V-pbw">
+            <objects>
+                <pageViewController storyboardIdentifier="AddNewPagePVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="UxW-bZ-12L" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eiC-8d-UP1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3536" y="-1726"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="2X8-V4-ybd">
+            <objects>
+                <viewController storyboardIdentifier="AddNewExpenseVC" id="NiP-gO-IHN" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sth-zR-c8I"/>
+                        <viewControllerLayoutGuide type="bottom" id="PY8-Dx-pcb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lHb-VA-sg6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rQu-Mc-kaz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4244" y="-2031"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="9qA-e5-nym">
+            <objects>
+                <viewController storyboardIdentifier="AddNewIncomeVC" id="NHq-to-rM9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="08V-zm-Vxa"/>
+                        <viewControllerLayoutGuide type="bottom" id="am4-M5-R3k"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jf1-iA-Pv1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pzx-5w-0y8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4244" y="-1303"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="m1M-Zz-RSf">
